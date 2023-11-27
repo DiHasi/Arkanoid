@@ -31,11 +31,9 @@ C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\Arkanoi
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.csproj.AssemblyReference.cache
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\GameWindow.baml
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\GameWindow.g.cs
-C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelector.g.cs
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\StartWindow.g.cs
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\App.g.cs
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid_MarkupCompile.cache
-C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelector.baml
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\StartWindow.baml
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.g.resources
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.GeneratedMSBuildEditorConfig.editorconfig
@@ -51,3 +49,5 @@ C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\Newtons
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\LevelLibrary.dll
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\LevelLibrary.pdb
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.csproj.CopyComplete
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelectorWindow.baml
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelectorWindow.g.cs

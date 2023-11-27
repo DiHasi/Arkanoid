@@ -12,8 +12,6 @@ namespace Arkanoid;
 public partial class GameWindow : Window
 {
     private const double PlatformSpeed = 500;
-    
-
     private double DefaultPlatformPositionX { get; } = 350;
     private double PlatformWidth { get; } = 100;
     private Stopwatch Stopwatch { get; }
@@ -40,7 +38,7 @@ public partial class GameWindow : Window
         BallPositionY = Canvas.GetTop(Ball);
         BallSpeedX = -1;
         BallSpeedY = 2;
-        BallSpeed = 200;
+        BallSpeed = 300;
         CompositionTarget.Rendering += CompositionTarget_Rendering;
     }
 

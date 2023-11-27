@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace Arkanoid;
 
-public partial class LevelSelector : Window
+public partial class LevelSelectorWindow : Window
 {
     private List<Button> buttons = new List<Button>();
     private List<Level>? levels = new List<Level>();
-    public LevelSelector()
+    public LevelSelectorWindow()
     {
         InitializeComponent();
 

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\App.xaml
-3539152079
+3-1210845721
 
-51122269987
+5650815074
 200407719201
-GameWindow.xaml;LevelSelector.xaml;StartWindow.xaml;
+GameWindow.xaml;LevelSelectorWindow.xaml;StartWindow.xaml;
 
 False
 
