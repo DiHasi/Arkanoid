@@ -1,28 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using LevelLibrary;
+using Newtonsoft.Json;
 
-namespace Arkanoid
+namespace Arkanoid;
+
+public partial class LevelSelector : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class LevelSelector : Window
+    private List<Button> buttons = new List<Button>();
+    private List<Level>? levels = new List<Level>();
+    public LevelSelector()
     {
-        public LevelSelector()
+        InitializeComponent();
+
+        List<BlockConfiguration> blockConfigurations1 = new List<BlockConfiguration>();
+        int startX = 30;
+        int startY = 30;
+        int blockWidth = 60;
+        int blockHeight = 50;
+
+        for (int row = 0; row < 6; row++)
         {
-            InitializeComponent();
+            for (int col = 0; col < 12; col++)
+            {
+                int positionX = startX + col * blockWidth;
+                int positionY = startY + row * blockHeight;
+
+                blockConfigurations1.Add(new BlockConfiguration(new Block(BlockType.Ordinary), positionX, positionY));
+            }
         }
+        
+        Level level1 = new Level
+        (
+            blockConfigurations1,
+            new AdditionalParameters
+            {
+                MagnetBonus = 0.5,
+                PlatformEnlargementBonus = 0,
+                BallAccelerationBonus = 0.5
+            }
+        );
+        levels.Add(level1);
+        
+        var json = JsonConvert.SerializeObject(levels, Formatting.Indented);
+        File.WriteAllText("levels.json", json);
+        
+        
+        // var json = File.ReadAllText("levels.json");
+        // levels = JsonConvert.DeserializeObject<List<Level>>(json);
+        
+
+        foreach (UIElement element in Grid.Children)
+        {
+            if (element is Button button)
+            {
+                button.Click += Button_Click;
+                buttons.Add(button);
+            }
+        }
+
+        if (levels != null)
+            for (int i = 0; i < levels.Count; i++)
+            {
+                buttons[i].IsEnabled = true;
+            }
+        
+        
+    }
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        Button clickedButton = (Button)sender;
+        Level levelNumber = levels?[buttons.IndexOf(clickedButton)]!;
+        
+        GameWindow gameWindow = new GameWindow(levelNumber);
+        gameWindow.Show();
+        
+        Window levelSelectorWindow = Window.GetWindow(clickedButton);
+        levelSelectorWindow.Close();
     }
 }

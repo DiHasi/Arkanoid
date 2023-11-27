@@ -35,7 +35,6 @@ C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSe
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\StartWindow.g.cs
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\App.g.cs
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid_MarkupCompile.cache
-C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid_MarkupCompile.lref
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelector.baml
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\StartWindow.baml
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.g.resources
@@ -48,3 +47,7 @@ C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\refint\
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.pdb
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.genruntimeconfig.cache
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\ref\Arkanoid.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\Newtonsoft.Json.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\LevelLibrary.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\LevelLibrary.pdb
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.csproj.CopyComplete

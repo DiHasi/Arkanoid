@@ -3,78 +3,78 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Arkanoid"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
-    <Grid>
+    <Grid Name="Grid">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Content="1" IsEnabled="True"/>
-        <Button Grid.Row="0" Grid.Column="1" Content="2"/>
-        <Button Grid.Row="0" Grid.Column="2" Content="3"/>
-        <Button Grid.Row="0" Grid.Column="3" Content="4"/>
-        <Button Grid.Row="0" Grid.Column="4" Content="5"/>
-        <Button Grid.Row="0" Grid.Column="5" Content="6"/>
-    
-        <Button Grid.Row="1" Grid.Column="0" Content="7"/>
-        <Button Grid.Row="1" Grid.Column="1" Content="8"/>
-        <Button Grid.Row="1" Grid.Column="2" Content="9"/>
-        <Button Grid.Row="1" Grid.Column="3" Content="10"/>
-        <Button Grid.Row="1" Grid.Column="4" Content="11"/>
-        <Button Grid.Row="1" Grid.Column="5" Content="12"/>
-        
-        <Button Grid.Row="2" Grid.Column="0" Content="13"/>
-        <Button Grid.Row="2" Grid.Column="1" Content="14"/>
-        <Button Grid.Row="2" Grid.Column="2" Content="15"/>
-        <Button Grid.Row="2" Grid.Column="3" Content="16"/>
-        <Button Grid.Row="2" Grid.Column="4" Content="17"/>
-        <Button Grid.Row="2" Grid.Column="5" Content="18"/>
+        <Button Grid.Row="0" Grid.Column="0" Content="1" />
+        <Button Grid.Row="0" Grid.Column="1" Content="2" />
+        <Button Grid.Row="0" Grid.Column="2" Content="3" />
+        <Button Grid.Row="0" Grid.Column="3" Content="4" />
+        <Button Grid.Row="0" Grid.Column="4" Content="5" />
+        <Button Grid.Row="0" Grid.Column="5" Content="6" />
+
+        <Button Grid.Row="1" Grid.Column="0" Content="7" />
+        <Button Grid.Row="1" Grid.Column="1" Content="8" />
+        <Button Grid.Row="1" Grid.Column="2" Content="9" />
+        <Button Grid.Row="1" Grid.Column="3" Content="10" />
+        <Button Grid.Row="1" Grid.Column="4" Content="11" />
+        <Button Grid.Row="1" Grid.Column="5" Content="12" />
+
+        <Button Grid.Row="2" Grid.Column="0" Content="13" />
+        <Button Grid.Row="2" Grid.Column="1" Content="14" />
+        <Button Grid.Row="2" Grid.Column="2" Content="15" />
+        <Button Grid.Row="2" Grid.Column="3" Content="16" />
+        <Button Grid.Row="2" Grid.Column="4" Content="17" />
+        <Button Grid.Row="2" Grid.Column="5" Content="18" />
     </Grid>
-    
+
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="Orange"/>
-            <Setter Property="FontSize" Value="32"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Background" Value="Orange" />
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="IsEnabled" Value="False" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15" BorderBrush="Black" BorderThickness="1">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15"
+                                BorderBrush="Black" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="Coral"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="DarkBlue"/>
+                                <Setter TargetName="border" Property="Background" Value="Coral" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="DarkBlue" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="DarkOrange"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="DarkRed"/>
+                                <Setter TargetName="border" Property="Background" Value="DarkOrange" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="DarkRed" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
-                                <Setter TargetName="border" Property="BorderBrush" Value="Gray"/>
-                                <Setter Property="Foreground" Value="Gray"/>
-                                <Setter Property="Cursor" Value="Arrow"/>
+                                <Setter TargetName="border" Property="Background" Value="LightGray" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="Gray" />
+                                <Setter Property="Foreground" Value="Gray" />
+                                <Setter Property="Cursor" Value="Arrow" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="BorderThickness" Value="2"></Setter>
-            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="Black" />
         </Style>
     </Window.Resources>
 </Window>

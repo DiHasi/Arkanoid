@@ -1,0 +1,12 @@
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\bin\Debug\net7.0\LevelLibrary.deps.json
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\bin\Debug\net7.0\LevelLibrary.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\bin\Debug\net7.0\LevelLibrary.pdb
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.csproj.AssemblyReference.cache
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.AssemblyInfoInputs.cache
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.AssemblyInfo.cs
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\refint\LevelLibrary.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\LevelLibrary.pdb
+C:\Users\Kirill\RiderProjects\Arkanoid\LevelLibrary\obj\Debug\net7.0\ref\LevelLibrary.dll

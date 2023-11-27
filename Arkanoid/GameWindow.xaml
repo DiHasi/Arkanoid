@@ -5,16 +5,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         Title="Arkanoid" Height="750" Width="800" ResizeMode="NoResize">
-    
+
     <Grid>
-        <Canvas Name="Canvas" Background="Linen" >
-            <Rectangle Name="TopWall" Fill="DimGray" Height="10" Width="{Binding ActualWidth, ElementName=Canvas}" Canvas.Top="0"></Rectangle>
-            <Rectangle Name="BottomWall" Fill="DimGray" Height="10" Width="{Binding ActualWidth, ElementName=Canvas}" Canvas.Bottom="-10"></Rectangle>
-            <Rectangle Name="LeftWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}" Canvas.Left="0" Fill="DimGray"></Rectangle>
-            <Rectangle Name="RightWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}" Canvas.Right="0" Fill="DimGray"></Rectangle>
-            <Rectangle Name="Platform" Width="100" Height="20" Fill="Black" Canvas.Left="350" Canvas.Top="690"/>
+        <Canvas Name="Canvas" Background="Linen">
+            <Rectangle Tag="base" Name="TopWall" Fill="DimGray" Height="10" Width="{Binding ActualWidth, ElementName=Canvas}"
+                       Canvas.Top="0" />
+            <Rectangle Tag="base" Name="BottomWall" Fill="DimGray" Height="10" Width="{Binding ActualWidth, ElementName=Canvas}"
+                       Canvas.Bottom="-10" />
+            <Rectangle Tag="base" Name="LeftWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}" Canvas.Left="0"
+                       Fill="DimGray" />
+            <Rectangle Tag="base" Name="RightWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}" Canvas.Right="0"
+                       Fill="DimGray" />
+            <Rectangle Tag="base" Name="Platform" Width="100" Height="10" Fill="Black" Canvas.Left="350" Canvas.Bottom="5" />
             <Ellipse Name="Ball" Width="20" Height="20" Fill="Red" Canvas.Left="430" Canvas.Top="500" />
         </Canvas>
     </Grid>
-   
+
 </Window>
