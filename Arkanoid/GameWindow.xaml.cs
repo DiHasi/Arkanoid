@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace Arkanoid;
@@ -37,12 +38,11 @@ public partial class GameWindow : Window
         PreviousTime = 0;
         PlatformPositionX = DefaultPlatformPositionX;
         BallHeight = 20;
-        BallRadius = BallHeight / 2;
         BallPositionX = Canvas.GetLeft(Ball);
-        BallPositionY = Canvas.GetBottom(Ball) + BallHeight;
+        BallPositionY = Canvas.GetTop(Ball);
         BallSpeedX = -1;
-        BallSpeedY = -2;
-        BallSpeed = 200;
+        BallSpeedY = 2;
+        BallSpeed = 300;
         CompositionTarget.Rendering += CompositionTarget_Rendering;
     }
 
@@ -55,74 +55,23 @@ public partial class GameWindow : Window
         BallPositionY += BallSpeedY * deltaTime * BallSpeed;
 
         Canvas.SetLeft(Ball, BallPositionX);
-        Canvas.SetBottom(Ball, BallPositionY);
+        Canvas.SetTop(Ball, BallPositionY);
 
         var ballBounds = new Rect(BallPositionX, BallPositionY, BallHeight, BallHeight);
-        var platformBounds = new Rect(PlatformPositionX, Canvas.GetBottom(Platform), PlatformWidth,
-            PlatformHeight);
         
-
-        if (ballBounds.IntersectsWith(platformBounds))
-        {
-            // // Calculate the collision point on the platform
-            // double collisionPointX = BallPositionX + BallHeight / 2;
-            // double platformCenterX = PlatformPositionX + PlatformWidth / 2;
-            // double distanceFromCenter = collisionPointX - platformCenterX;
-            //
-            // // Calculate the bounce angle based on the distance from the center
-            // double maxDistanceFromCenter = PlatformWidth / 2;
-            // double maxBounceAngle = 60; // Maximum bounce angle in degrees
-            //
-            // double bounceAngle = maxBounceAngle * (distanceFromCenter / maxDistanceFromCenter);
-            // double bounceAngleRadians = bounceAngle * (Math.PI / 180); // Convert to radians
-            //
-            // Console.WriteLine(bounceAngle + " " + bounceAngleRadians);
-            //
-            // // Calculate the new ball speed and direction based on the bounce angle
-            // double ballSpeedMagnitude = Math.Sqrt(BallSpeedX * BallSpeedX + BallSpeedY * BallSpeedY);
-            // double ballDirectionRadians = Math.Atan2(BallSpeedY, BallSpeedX);
-            //
-            // double newBallDirectionRadians = Math.PI + bounceAngleRadians - ballDirectionRadians; // Change the sign of the bounce angle
-            // double newBallSpeedX = Math.Cos(newBallDirectionRadians) * ballSpeedMagnitude;
-            // double newBallSpeedY = -Math.Sin(newBallDirectionRadians) * ballSpeedMagnitude;
-            //
-            // // Update the ball speed and direction
-            // BallSpeedX = newBallSpeedX;
-            // BallSpeedY = newBallSpeedY;
-
-            // double collisionPointX = BallPositionX + BallHeight / 2;
-            // double platformCenterX = PlatformPositionX + PlatformWidth / 2;
-            // double distanceFromCenter = collisionPointX - platformCenterX;
-            //
-            // // Calculate the relative collision point (-0.5 to 0.5, where 0 is the center of the platform)
-            // double relativeCollisionPoint = distanceFromCenter / (PlatformWidth / 2);
-            //
-            // // Calculate the bounce angle based on the relative collision point (from -60 to 60 degrees)
-            // double bounceAngleDegrees = relativeCollisionPoint * 60;
-            // double bounceAngleRadians = bounceAngleDegrees * (Math.PI / 180); // Convert to radians
-            //
-            // // Calculate the new ball speed and direction based on the bounce angle
-            // double ballSpeedMagnitude = Math.Sqrt(BallSpeedX * BallSpeedX + BallSpeedY * BallSpeedY);
-            // BallSpeedX = Math.Cos(bounceAngleRadians) * ballSpeedMagnitude;
-            // BallSpeedY = -Math.Sin(bounceAngleRadians) * ballSpeedMagnitude;
-            BallSpeedY *= -1;
-        }
-
-        if (BallPositionX <= 0 || BallPositionX + BallHeight >= Canvas.ActualWidth)
-        {
-            BallSpeedX *= -1;
-        }
-
-        if (BallPositionY <= 0 || BallPositionY + BallHeight >= Canvas.ActualHeight)
-        {
-            BallSpeedY *= -1;
-        }
+        var ballGeometry = new EllipseGeometry(ballBounds);
+        var hitTestParams = new GeometryHitTestParameters(ballGeometry);
+        
+        HitTestResultCallback hitTestCallback = HitTestCallback;
+        
+        VisualTreeHelper.HitTest(Canvas, null, hitTestCallback, hitTestParams);
+        
 
         if (Keyboard.IsKeyDown(Key.A))
         {
-            if (PlatformPositionX - PlatformSpeed * deltaTime < 1)
+            if (PlatformPositionX - PlatformSpeed * deltaTime < 10)
             {
-                PlatformPositionX = 1;
+                PlatformPositionX = 10;
             }
             else
             {
@@ -131,9 +80,9 @@ public partial class GameWindow : Window
         }
         else if (Keyboard.IsKeyDown(Key.D))
         {
-            if (PlatformPositionX + PlatformWidth + PlatformSpeed * deltaTime > 764)
+            if (PlatformPositionX + PlatformWidth + PlatformSpeed * deltaTime > 774)
             {
-                PlatformPositionX = 764 - PlatformWidth;
+                PlatformPositionX = 774 - PlatformWidth;
             }
             else
             {
@@ -146,6 +95,35 @@ public partial class GameWindow : Window
         PreviousTime = currentTime;
     }
 
+    
+    private HitTestResultBehavior HitTestCallback(HitTestResult result)
+    {
+        if (result.VisualHit is Rectangle wall)
+        {
+            if (wall.Name == "LeftWall")
+            {
+                BallSpeedX *= -1;
+            }
+            else if (wall.Name == "RightWall")
+            {
+                BallSpeedX *= -1;
+            }
+            else if (wall.Name == "TopWall")
+            {
+                BallSpeedY *= -1;
+            }
+            else if (wall.Name == "BottomWall")
+            {
+                BallSpeedY = 0;
+                BallSpeedX = 0;
+            }
+            else if (wall.Name == "Platform")
+            {
+                BallSpeedY *= -1;
+            }
+        }
+        return HitTestResultBehavior.Continue;
+    }
 
     private void AnimatePlatform(double newLeft)
     {
