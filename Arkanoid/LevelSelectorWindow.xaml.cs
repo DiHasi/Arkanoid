@@ -9,22 +9,22 @@ namespace Arkanoid;
 
 public partial class LevelSelectorWindow : Window
 {
-    LevelFacade instance = LevelFacade.Instance;
+    private readonly List<Button> buttons = new();
+    private readonly LevelSingleton instance = LevelSingleton.Instance;
+    private List<Level>? levels = new();
+
     public LevelSelectorWindow()
     {
         InitializeComponent();
-        
+
         LoadLevels();
         LoadButtons();
     }
-    
-    private List<Button> buttons = new();
-    private List<Level>? levels = new();
-    
+
     private void LoadLevels()
     {
         var json = File.ReadAllText("levels.json");
-        
+
         instance.Levels = JsonConvert.DeserializeObject<List<Level>>(json);
     }
 
@@ -43,6 +43,7 @@ public partial class LevelSelectorWindow : Window
                 button.Click += Button_Click;
                 buttons.Add(button);
             }
+
         ActivateButtons();
     }
 

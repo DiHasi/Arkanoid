@@ -9,30 +9,37 @@ public enum BlockType
 
 public class Block
 {
-    private int Health { get; set; }
     public Block(BlockType type)
     {
         Type = type;
-        Health = type switch
+        MaxHealth = type switch
         {
             BlockType.Ordinary => 1,
             BlockType.Strong => 2,
             BlockType.Bonus => 1,
-            _ => Health
+            _ => MaxHealth
         };
     }
+
+    private int Health { get; set; }
+    private int MaxHealth { get; set; }
+
+    public BlockType Type { get; set; }
 
     public void Hit()
     {
         Health--;
     }
-    
+
     public bool IsDestroyed()
     {
         return Health <= 0;
     }
-    
-    public BlockType Type { get; set; }
+
+    public void RestoreHealth()
+    {
+        Health = MaxHealth;
+    }
 }
 
 public class BlockConfiguration

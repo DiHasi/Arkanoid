@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,58 +10,86 @@ using LevelLibrary;
 
 namespace Arkanoid;
 
-public partial class GameWindow : Window
+public partial class GameWindow
 {
     private const double PlatformSpeed = 500;
+
+
+    private const double PlatformWidth = 100;
+    private const double DefaultPlatformPositionX = 350;
+
+
+    private const double DefaultBallPositionX = 430;
+    private const double DefaultBallPositionY = 500;
+
+    private const double BallSpeed = 200;
+    private const double BallHeight = 20;
+    private const double DefaultBallSpeedX = -1;
+    private const double DefaultBallSpeedY = 2;
+
+    private readonly LevelSingleton instance;
 
     public GameWindow()
     {
         InitializeComponent();
-        instance = LevelFacade.Instance;
+        instance = LevelSingleton.Instance;
         LoadLevel();
-        Stopwatch = new Stopwatch();
-        Stopwatch.Start();
-        PreviousTime = 0;
-        PlatformPositionX = DefaultPlatformPositionX;
-        BallHeight = 20;
-        BallPositionX = Canvas.GetLeft(Ball);
-        BallPositionY = Canvas.GetTop(Ball);
-        BallSpeedX = -1;
-        BallSpeedY = 2;
-        BallSpeed = 200;
         CompositionTarget.Rendering += CompositionTarget_Rendering;
-
     }
 
-    private double DefaultPlatformPositionX { get; } = 350;
-    private double PlatformWidth { get; } = 100;
-    private Stopwatch Stopwatch { get; }
-    private double PreviousTime { get; set; }
-    private double PlatformPositionX { get; set; }
+    private void ConfigureElements()
+    {
+        PlatformPositionX = DefaultPlatformPositionX;
+        BallPositionX = DefaultBallPositionX;
+        BallPositionY = DefaultBallPositionY;
+        BallSpeedX = DefaultBallSpeedX;
+        BallSpeedY = DefaultBallSpeedY;
+    }
 
-    private double BallSpeed { get; set; }
-    private double BallHeight { get; }
+    private double PlatformPositionX { get; set; }
+    private Stopwatch Stopwatch { get; set; }
+    private double PreviousTime { get; set; }
     private double BallPositionX { get; set; }
     private double BallPositionY { get; set; }
     private double BallSpeedX { get; set; }
     private double BallSpeedY { get; set; }
 
-    private LevelFacade instance;
-    
+    private void StartStopwatch()
+    {
+        Stopwatch = new Stopwatch();
+        Stopwatch.Restart();
+        PreviousTime = 0;
+    }
 
     private void LoadLevel()
     {
+        StartStopwatch();
+        LoadBlocks();
+        ConfigureElements();
+    }
+    
+
+    private void LoadBlocks()
+    {
+        foreach (UIElement child in Canvas.Children.Cast<UIElement>().ToList())
+        {
+            if(child is Rectangle {Tag : int} rectangle)
+            {
+                Canvas.Children.Remove(child);
+            }
+        }
         foreach (var blockConfig in instance.CurrentLevel.BlockConfigurations)
         {
+            instance.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
             var block = blockConfig.Block;
-            
+
             var blockRectangle = new Rectangle
             {
                 Width = 50,
                 Height = 30,
-                Tag = LevelFacade.Instance.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
+                Tag = LevelSingleton.Instance.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
             };
-            
+
             // эти switch просто 🔥🔥🔥🔥
             blockRectangle.Fill = block.Type switch
             {
@@ -80,18 +108,7 @@ public partial class GameWindow : Window
         }
     }
 
-    private void HitTestBounce()
-    {
-        var ballBounds = new Rect(BallPositionX, BallPositionY, BallHeight, BallHeight);
-
-        var ballGeometry = new EllipseGeometry(ballBounds);
-        var hitTestParams = new GeometryHitTestParameters(ballGeometry);
-
-        HitTestResultCallback hitTestCallback = HitTestCallback;
-
-        VisualTreeHelper.HitTest(Canvas, null, hitTestCallback, hitTestParams);
-    }
-
+    
     private void MovePlatform(double deltaTime)
     {
         if (Keyboard.IsKeyDown(Key.A))
@@ -122,22 +139,34 @@ public partial class GameWindow : Window
         Canvas.SetLeft(Ball, BallPositionX);
         Canvas.SetTop(Ball, BallPositionY);
     }
-
+    
     private void CompositionTarget_Rendering(object? sender, EventArgs e)
     {
         var currentTime = Stopwatch.Elapsed.TotalSeconds;
         var deltaTime = currentTime - PreviousTime;
-
+        PreviousTime = currentTime;
+        
         MovePlatform(deltaTime);
         MoveBall(deltaTime);
 
-        PreviousTime = currentTime;
+    }
+    private void HitTestBounce()
+    {
+        var ballBounds = new Rect(BallPositionX, BallPositionY, BallHeight, BallHeight);
+
+        var ballGeometry = new EllipseGeometry(ballBounds);
+        var hitTestParams = new GeometryHitTestParameters(ballGeometry);
+
+        HitTestResultCallback hitTestCallback = HitTestCallback;
+
+        VisualTreeHelper.HitTest(Canvas, null, hitTestCallback, hitTestParams);
     }
 
-    private HitTestResultBehavior HitTestCallback(HitTestResult result)
+
+
+    private void CheckCollisionWithWall(HitTestResult result)
     {
         if (result.VisualHit is Rectangle { Tag: "base" } rectangle)
-        {
             switch (rectangle.Name)
             {
                 case "LeftWall":
@@ -148,35 +177,52 @@ public partial class GameWindow : Window
                     BallSpeedY *= -1;
                     break;
                 case "BottomWall":
-                    Application.Current.Shutdown();
+                    var res = MessageBox.Show("Начать заново?", "Вы проиграли.", MessageBoxButton.YesNo);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        LoadLevel();
+                    }
+                    else
+                    {
+                        Application.Current.Shutdown();
+                    }
+
                     break;
                 case "Platform":
                     BallSpeedY *= -1;
                     break;
             }
-        }
-        else if (result.VisualHit is Rectangle { Tag: int } hitBlock)
+    }
+
+    private void CheckCollisionWithBlocks(HitTestResult result)
+    {
+        if (result.VisualHit is Rectangle { Tag: int } hitBlock)
         {
-            if (Canvas.GetTop(hitBlock) + 30 <= Canvas.GetTop(Ball) || Canvas.GetTop(hitBlock) >= Canvas.GetTop(Ball) + 20)
+            if (Canvas.GetTop(hitBlock) + 30 <= Canvas.GetTop(Ball) ||
+                Canvas.GetTop(hitBlock) >= Canvas.GetTop(Ball) + 20)
                 BallSpeedY *= -1;
             else
                 BallSpeedX *= -1;
-            
+
             if (instance.BlockDictionary.TryGetValue(hitBlock, out var block))
             {
                 block.Hit();
                 if (block.IsDestroyed())
                 {
                     Canvas.Children.Remove(hitBlock);
-                    instance.BlockDictionary.Remove(hitBlock);
+                    //instance.BlockDictionary.Remove(hitBlock);
                 }
 
                 if (block.Type == BlockType.Strong && !block.IsDestroyed())
-                {
                     hitBlock.Fill = new SolidColorBrush(Colors.DodgerBlue);
-                }
             }
         }
+    }
+
+    private HitTestResultBehavior HitTestCallback(HitTestResult result)
+    {
+        CheckCollisionWithWall(result);
+        CheckCollisionWithBlocks(result);
 
         return HitTestResultBehavior.Continue;
     }
