@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using GameEntitiesLibrary;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Arkanoid;
 
@@ -33,12 +34,12 @@ public partial class GameWindow
     private static readonly SolidColorBrush BonusBlockColor = new(Colors.CornflowerBlue);
 
 
-    private readonly LevelSingleton _instance;
+    private readonly IServiceProvider _serviceProvider;
 
-    public GameWindow()
+    public GameWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
-        _instance = LevelSingleton.Instance;
+        _serviceProvider = serviceProvider;
         LoadLevel();
         CompositionTarget.Rendering += CompositionTarget_Rendering;
     }
@@ -81,16 +82,18 @@ public partial class GameWindow
         foreach (var child in Canvas.Children.Cast<UIElement>().ToList())
             if (child is Rectangle { Tag : int })
                 Canvas.Children.Remove(child);
-        foreach (var blockConfig in _instance.CurrentLevel.BlockConfigurations)
+        
+        var levelSingleton = _serviceProvider.GetRequiredService<LevelSingleton>();
+        foreach (var blockConfig in levelSingleton.CurrentLevel?.BlockConfigurations!)
         {
-            _instance.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
+            levelSingleton.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
             var block = blockConfig.Block;
 
             var blockRectangle = new Rectangle
             {
                 Width = 50,
                 Height = 30,
-                Tag = LevelSingleton.Instance.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
+                Tag = levelSingleton.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
             };
 
             blockRectangle.Fill = block.Type switch
@@ -101,7 +104,7 @@ public partial class GameWindow
                 _ => blockRectangle.Fill
             };
 
-            _instance.BlockDictionary[blockRectangle] = blockConfig.Block;
+            levelSingleton.BlockDictionary[blockRectangle] = blockConfig.Block;
 
             Canvas.SetLeft(blockRectangle, blockConfig.PositionX);
             Canvas.SetTop(blockRectangle, blockConfig.PositionY);
@@ -215,12 +218,13 @@ public partial class GameWindow
         if (result.VisualHit is Rectangle { Tag: int } hitBlock)
         {
             if (Canvas.GetTop(hitBlock) + 30 <= Canvas.GetTop(Ball) ||
-                Canvas.GetTop(hitBlock) >= Canvas.GetTop(Ball) + 20)
+                Canvas.GetTop(hitBlock) >= Canvas.GetTop(Ball) + BallHeight)
                 BallSpeedY *= -1;
             else
                 BallSpeedX *= -1;
 
-            if (_instance.BlockDictionary.TryGetValue(hitBlock, out var block))
+            var levelSingleton = _serviceProvider.GetRequiredService<LevelSingleton>();
+            if (levelSingleton.BlockDictionary.TryGetValue(hitBlock, out var block))
             {
                 block.Hit();
                 if (block.IsDestroyed()) Canvas.Children.Remove(hitBlock);

@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using GameEntitiesLibrary;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Arkanoid;
@@ -10,12 +12,12 @@ namespace Arkanoid;
 public partial class LevelSelectorWindow : Window
 {
     private readonly List<Button> buttons = new();
-    private readonly LevelSingleton instance = LevelSingleton.Instance;
-    private List<Level>? levels = new();
+    private readonly IServiceProvider _serviceProvider;
 
-    public LevelSelectorWindow()
+    public LevelSelectorWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
+        _serviceProvider = serviceProvider;
 
         LoadLevels();
         LoadButtons();
@@ -24,15 +26,15 @@ public partial class LevelSelectorWindow : Window
     private void LoadLevels()
     {
         var json = File.ReadAllText("levels.json");
-
-        instance.Levels = JsonConvert.DeserializeObject<List<Level>>(json);
+        var levels = _serviceProvider.GetRequiredService<List<Level>>();
+        levels.AddRange(JsonConvert.DeserializeObject<List<Level>>(json)!);
     }
 
     private void ActivateButtons()
     {
-        if (instance.Levels != null)
-            for (var i = 0; i < instance.Levels.Count; i++)
-                buttons[i].IsEnabled = true;
+        var levels = _serviceProvider.GetRequiredService<List<Level>>();
+        for (var i = 0; i < levels.Count; i++)
+            buttons[i].IsEnabled = true;
     }
 
     private void LoadButtons()
@@ -49,13 +51,15 @@ public partial class LevelSelectorWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
+        var levelSingleton = _serviceProvider.GetRequiredService<LevelSingleton>();
+        var levels = _serviceProvider.GetRequiredService<List<Level>>();
         var clickedButton = (Button)sender;
-        instance.CurrentLevel = instance.Levels?[buttons.IndexOf(clickedButton)]!;
+        levelSingleton.CurrentLevel = levels[buttons.IndexOf(clickedButton)]!;
 
-        var gameWindow = new GameWindow();
+        var gameWindow = new GameWindow(_serviceProvider);
         gameWindow.Show();
 
         var levelSelectorWindow = GetWindow(clickedButton);
-        levelSelectorWindow?.Close();
+        levelSelectorWindow!.Hide();
     }
 }

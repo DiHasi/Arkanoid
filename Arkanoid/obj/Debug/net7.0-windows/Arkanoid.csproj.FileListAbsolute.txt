@@ -46,8 +46,10 @@ C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoi
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.genruntimeconfig.cache
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\ref\Arkanoid.dll
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\Newtonsoft.Json.dll
-C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\LevelLibrary.dll
-C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\LevelLibrary.pdb
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\Arkanoid.csproj.CopyComplete
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelectorWindow.baml
 C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\obj\Debug\net7.0-windows\LevelSelectorWindow.g.cs
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\GameEntitiesLibrary.dll
+C:\Users\Kirill\RiderProjects\Arkanoid\Arkanoid\bin\Debug\net7.0-windows\GameEntitiesLibrary.pdb
