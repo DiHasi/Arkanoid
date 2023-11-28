@@ -1,6 +1,6 @@
 ﻿namespace LevelLibrary;
 
-public enum BlockType 
+public enum BlockType
 {
     Ordinary,
     Strong,
@@ -9,18 +9,35 @@ public enum BlockType
 
 public class Block
 {
+    private int Health { get; set; }
     public Block(BlockType type)
     {
         Type = type;
+        Health = type switch
+        {
+            BlockType.Ordinary => 1,
+            BlockType.Strong => 2,
+            BlockType.Bonus => 1,
+            _ => Health
+        };
     }
 
-    public BlockType Type { get; set; }
+    public void Hit()
+    {
+        Health--;
+    }
     
+    public bool IsDestroyed()
+    {
+        return Health <= 0;
+    }
+    
+    public BlockType Type { get; set; }
 }
 
 public class BlockConfiguration
 {
-    public BlockConfiguration(Block block, int positionX, int positionY)   
+    public BlockConfiguration(Block block, int positionX, int positionY)
     {
         Block = block;
         PositionX = positionX;

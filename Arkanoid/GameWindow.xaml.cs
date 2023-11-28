@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,23 +13,12 @@ namespace Arkanoid;
 public partial class GameWindow : Window
 {
     private const double PlatformSpeed = 500;
-    private double DefaultPlatformPositionX { get; } = 350;
-    private double PlatformWidth { get; } = 100;
-    private Stopwatch Stopwatch { get; }
-    private double PreviousTime { get; set; }
-    private double PlatformPositionX { get; set; }
 
-    private double BallSpeed { get; }
-    private double BallHeight { get; }
-    private double BallPositionX { get; set; }
-    private double BallPositionY { get; set; }
-    private double BallSpeedX { get; set; }
-    private double BallSpeedY { get; set; }
-
-    public GameWindow(Level level)
+    public GameWindow()
     {
         InitializeComponent();
-        LoadLevel(level);
+        instance = LevelFacade.Instance;
+        LoadLevel();
         Stopwatch = new Stopwatch();
         Stopwatch.Start();
         PreviousTime = 0;
@@ -38,33 +28,58 @@ public partial class GameWindow : Window
         BallPositionY = Canvas.GetTop(Ball);
         BallSpeedX = -1;
         BallSpeedY = 2;
-        BallSpeed = 300;
+        BallSpeed = 200;
         CompositionTarget.Rendering += CompositionTarget_Rendering;
+
     }
 
-    private void LoadLevel(Level level)
+    private double DefaultPlatformPositionX { get; } = 350;
+    private double PlatformWidth { get; } = 100;
+    private Stopwatch Stopwatch { get; }
+    private double PreviousTime { get; set; }
+    private double PlatformPositionX { get; set; }
+
+    private double BallSpeed { get; set; }
+    private double BallHeight { get; }
+    private double BallPositionX { get; set; }
+    private double BallPositionY { get; set; }
+    private double BallSpeedX { get; set; }
+    private double BallSpeedY { get; set; }
+
+    private LevelFacade instance;
+    
+
+    private void LoadLevel()
     {
-        foreach (BlockConfiguration blockConfig in level.BlockConfigurations)
+        foreach (var blockConfig in instance.CurrentLevel.BlockConfigurations)
         {
-            Block block = blockConfig.Block;
-            int x = blockConfig.PositionX;
-            int y = blockConfig.PositionY;
+            var block = blockConfig.Block;
             
-            Rectangle blockRectangle = new Rectangle
+            var blockRectangle = new Rectangle
             {
                 Width = 50,
                 Height = 30,
-                Fill = new SolidColorBrush(Colors.Orange),
-                Tag = "block"
+                Tag = LevelFacade.Instance.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
             };
             
-            Canvas.SetLeft(blockRectangle, x);
-            Canvas.SetTop(blockRectangle, y);
-            
+            // эти switch просто 🔥🔥🔥🔥
+            blockRectangle.Fill = block.Type switch
+            {
+                BlockType.Ordinary => new SolidColorBrush(Colors.DarkOrange),
+                BlockType.Strong => new SolidColorBrush(Colors.MediumOrchid),
+                BlockType.Bonus => new SolidColorBrush(Colors.CornflowerBlue),
+                _ => blockRectangle.Fill
+            };
+
+            instance.BlockDictionary[blockRectangle] = blockConfig.Block;
+
+            Canvas.SetLeft(blockRectangle, blockConfig.PositionX);
+            Canvas.SetTop(blockRectangle, blockConfig.PositionY);
+
             Canvas.Children.Add(blockRectangle);
         }
     }
-    
+
     private void HitTestBounce()
     {
         var ballBounds = new Rect(BallPositionX, BallPositionY, BallHeight, BallHeight);
@@ -96,12 +111,12 @@ public partial class GameWindow : Window
 
         Canvas.SetLeft(Platform, PlatformPositionX);
     }
-    
+
     private void MoveBall(double deltaTime)
     {
         BallPositionX += BallSpeedX * deltaTime * BallSpeed;
         BallPositionY += BallSpeedY * deltaTime * BallSpeed;
-        
+
         HitTestBounce();
 
         Canvas.SetLeft(Ball, BallPositionX);
@@ -115,10 +130,10 @@ public partial class GameWindow : Window
 
         MovePlatform(deltaTime);
         MoveBall(deltaTime);
-        
+
         PreviousTime = currentTime;
     }
-    
+
     private HitTestResultBehavior HitTestCallback(HitTestResult result)
     {
         if (result.VisualHit is Rectangle { Tag: "base" } rectangle)
@@ -133,25 +148,34 @@ public partial class GameWindow : Window
                     BallSpeedY *= -1;
                     break;
                 case "BottomWall":
-                    BallSpeedY = 0;
-                    BallSpeedX = 0;
+                    Application.Current.Shutdown();
                     break;
                 case "Platform":
                     BallSpeedY *= -1;
                     break;
             }
         }
-        else if (result.VisualHit is Rectangle { Tag: "block" } block)
+        else if (result.VisualHit is Rectangle { Tag: int } hitBlock)
         {
-            if (Canvas.GetTop(block) + 30 <= Canvas.GetTop(Ball) || Canvas.GetTop(block) >= Canvas.GetTop(Ball) + 20)
-            {
+            if (Canvas.GetTop(hitBlock) + 30 <= Canvas.GetTop(Ball) || Canvas.GetTop(hitBlock) >= Canvas.GetTop(Ball) + 20)
                 BallSpeedY *= -1;
-            }
             else
-            {
                 BallSpeedX *= -1;
+            
+            if (instance.BlockDictionary.TryGetValue(hitBlock, out var block))
+            {
+                block.Hit();
+                if (block.IsDestroyed())
+                {
+                    Canvas.Children.Remove(hitBlock);
+                    instance.BlockDictionary.Remove(hitBlock);
+                }
+
+                if (block.Type == BlockType.Strong && !block.IsDestroyed())
+                {
+                    hitBlock.Fill = new SolidColorBrush(Colors.DodgerBlue);
+                }
             }
-            Canvas.Children.Remove(block);
         }
 
         return HitTestResultBehavior.Continue;

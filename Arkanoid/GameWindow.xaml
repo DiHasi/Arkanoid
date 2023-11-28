@@ -8,15 +8,20 @@
 
     <Grid>
         <Canvas Name="Canvas" Background="Linen">
-            <Rectangle Tag="base" Name="TopWall" Fill="DimGray" Height="10" Width="{Binding ActualWidth, ElementName=Canvas}"
+            <Rectangle Tag="base" Name="TopWall" Fill="DimGray" Height="10"
+                       Width="{Binding ActualWidth, ElementName=Canvas}"
                        Canvas.Top="0" />
-            <Rectangle Tag="base" Name="BottomWall" Fill="DimGray" Height="10" Width="{Binding ActualWidth, ElementName=Canvas}"
+            <Rectangle Tag="base" Name="BottomWall" Fill="DimGray" Height="10"
+                       Width="{Binding ActualWidth, ElementName=Canvas}"
                        Canvas.Bottom="-10" />
-            <Rectangle Tag="base" Name="LeftWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}" Canvas.Left="0"
+            <Rectangle Tag="base" Name="LeftWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}"
+                       Canvas.Left="0"
                        Fill="DimGray" />
-            <Rectangle Tag="base" Name="RightWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}" Canvas.Right="0"
+            <Rectangle Tag="base" Name="RightWall" Width="10" Height="{Binding ActualHeight, ElementName=Canvas}"
+                       Canvas.Right="0"
                        Fill="DimGray" />
-            <Rectangle Tag="base" Name="Platform" Width="100" Height="10" Fill="Black" Canvas.Left="350" Canvas.Bottom="5" />
+            <Rectangle Tag="base" Name="Platform" Width="100" Height="10" Fill="Black" Canvas.Left="350"
+                       Canvas.Bottom="5" />
             <Ellipse Name="Ball" Width="20" Height="20" Fill="Red" Canvas.Left="430" Canvas.Top="500" />
         </Canvas>
     </Grid>
