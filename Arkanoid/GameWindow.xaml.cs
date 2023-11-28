@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using LevelLibrary;
+using GameEntitiesLibrary;
 
 namespace Arkanoid;
 
@@ -27,15 +27,29 @@ public partial class GameWindow
     private const double DefaultBallSpeedX = -1;
     private const double DefaultBallSpeedY = 2;
 
-    private readonly LevelSingleton instance;
+    private static readonly SolidColorBrush OrdinaryBlockColor = new(Colors.DarkOrange);
+    private static readonly SolidColorBrush StrongBlockColor = new(Colors.MediumOrchid);
+    private static readonly SolidColorBrush DamagedStrongBlockColor = new(Colors.DodgerBlue);
+    private static readonly SolidColorBrush BonusBlockColor = new(Colors.CornflowerBlue);
+
+
+    private readonly LevelSingleton _instance;
 
     public GameWindow()
     {
         InitializeComponent();
-        instance = LevelSingleton.Instance;
+        _instance = LevelSingleton.Instance;
         LoadLevel();
         CompositionTarget.Rendering += CompositionTarget_Rendering;
     }
+
+    private double PlatformPositionX { get; set; }
+    private Stopwatch? Stopwatch { get; set; }
+    private double PreviousTime { get; set; }
+    private double BallPositionX { get; set; }
+    private double BallPositionY { get; set; }
+    private double BallSpeedX { get; set; }
+    private double BallSpeedY { get; set; }
 
     private void ConfigureElements()
     {
@@ -46,13 +60,6 @@ public partial class GameWindow
         BallSpeedY = DefaultBallSpeedY;
     }
 
-    private double PlatformPositionX { get; set; }
-    private Stopwatch Stopwatch { get; set; }
-    private double PreviousTime { get; set; }
-    private double BallPositionX { get; set; }
-    private double BallPositionY { get; set; }
-    private double BallSpeedX { get; set; }
-    private double BallSpeedY { get; set; }
 
     private void StartStopwatch()
     {
@@ -67,20 +74,16 @@ public partial class GameWindow
         LoadBlocks();
         ConfigureElements();
     }
-    
+
 
     private void LoadBlocks()
     {
-        foreach (UIElement child in Canvas.Children.Cast<UIElement>().ToList())
-        {
-            if(child is Rectangle {Tag : int} rectangle)
-            {
+        foreach (var child in Canvas.Children.Cast<UIElement>().ToList())
+            if (child is Rectangle { Tag : int })
                 Canvas.Children.Remove(child);
-            }
-        }
-        foreach (var blockConfig in instance.CurrentLevel.BlockConfigurations)
+        foreach (var blockConfig in _instance.CurrentLevel.BlockConfigurations)
         {
-            instance.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
+            _instance.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
             var block = blockConfig.Block;
 
             var blockRectangle = new Rectangle
@@ -90,16 +93,15 @@ public partial class GameWindow
                 Tag = LevelSingleton.Instance.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
             };
 
-            // эти switch просто 🔥🔥🔥🔥
             blockRectangle.Fill = block.Type switch
             {
-                BlockType.Ordinary => new SolidColorBrush(Colors.DarkOrange),
-                BlockType.Strong => new SolidColorBrush(Colors.MediumOrchid),
-                BlockType.Bonus => new SolidColorBrush(Colors.CornflowerBlue),
+                BlockType.Ordinary => OrdinaryBlockColor,
+                BlockType.Strong => StrongBlockColor,
+                BlockType.Bonus => BonusBlockColor,
                 _ => blockRectangle.Fill
             };
 
-            instance.BlockDictionary[blockRectangle] = blockConfig.Block;
+            _instance.BlockDictionary[blockRectangle] = blockConfig.Block;
 
             Canvas.SetLeft(blockRectangle, blockConfig.PositionX);
             Canvas.SetTop(blockRectangle, blockConfig.PositionY);
@@ -108,7 +110,6 @@ public partial class GameWindow
         }
     }
 
-    
     private void MovePlatform(double deltaTime)
     {
         if (Keyboard.IsKeyDown(Key.A))
@@ -125,6 +126,10 @@ public partial class GameWindow
             else
                 PlatformPositionX += PlatformSpeed * deltaTime;
         }
+        else if (Keyboard.IsKeyDown(Key.R))
+        {
+            LoadLevel();
+        }
 
         Canvas.SetLeft(Platform, PlatformPositionX);
     }
@@ -139,17 +144,17 @@ public partial class GameWindow
         Canvas.SetLeft(Ball, BallPositionX);
         Canvas.SetTop(Ball, BallPositionY);
     }
-    
+
     private void CompositionTarget_Rendering(object? sender, EventArgs e)
     {
-        var currentTime = Stopwatch.Elapsed.TotalSeconds;
+        var currentTime = Stopwatch!.Elapsed.TotalSeconds;
         var deltaTime = currentTime - PreviousTime;
         PreviousTime = currentTime;
-        
+
         MovePlatform(deltaTime);
         MoveBall(deltaTime);
-
     }
+
     private void HitTestBounce()
     {
         var ballBounds = new Rect(BallPositionX, BallPositionY, BallHeight, BallHeight);
@@ -162,7 +167,20 @@ public partial class GameWindow
         VisualTreeHelper.HitTest(Canvas, null, hitTestCallback, hitTestParams);
     }
 
+    private void CalculateAngle(Rectangle platform, out double ballSpeedXNew, out double ballSpeedYNew)
+    {
+        var platformCenterX = Canvas.GetLeft(platform) + platform.Width / 2;
+        var distance = Math.Abs(BallPositionX + BallHeight / 2 - platformCenterX);
+        var maxDistance = platform.Width / 2;
+        var angle = Math.PI / 2 * (distance / maxDistance);
+        var maxAngle = Math.PI / 4;
+        angle = Math.Max(-maxAngle, Math.Min(maxAngle, angle));
+        if (BallPositionX + BallHeight / 2 < platformCenterX) angle = -angle;
 
+        var ballSpeedMagnitude = Math.Sqrt(BallSpeedX * BallSpeedX + BallSpeedY * BallSpeedY);
+        ballSpeedXNew = ballSpeedMagnitude * Math.Sin(angle);
+        ballSpeedYNew = -ballSpeedMagnitude * Math.Cos(angle);
+    }
 
     private void CheckCollisionWithWall(HitTestResult result)
     {
@@ -179,17 +197,15 @@ public partial class GameWindow
                 case "BottomWall":
                     var res = MessageBox.Show("Начать заново?", "Вы проиграли.", MessageBoxButton.YesNo);
                     if (res == MessageBoxResult.Yes)
-                    {
                         LoadLevel();
-                    }
                     else
-                    {
                         Application.Current.Shutdown();
-                    }
-
                     break;
                 case "Platform":
-                    BallSpeedY *= -1;
+                    CalculateAngle(rectangle, out var ballSpeedXNew, out var ballSpeedYNew);
+                    BallSpeedX = ballSpeedXNew;
+                    BallSpeedY = ballSpeedYNew;
+                    Console.WriteLine(ballSpeedXNew + " " + ballSpeedYNew);
                     break;
             }
     }
@@ -204,17 +220,13 @@ public partial class GameWindow
             else
                 BallSpeedX *= -1;
 
-            if (instance.BlockDictionary.TryGetValue(hitBlock, out var block))
+            if (_instance.BlockDictionary.TryGetValue(hitBlock, out var block))
             {
                 block.Hit();
-                if (block.IsDestroyed())
-                {
-                    Canvas.Children.Remove(hitBlock);
-                    //instance.BlockDictionary.Remove(hitBlock);
-                }
-
+                if (block.IsDestroyed()) Canvas.Children.Remove(hitBlock);
+                //instance.BlockDictionary.Remove(hitBlock);
                 if (block.Type == BlockType.Strong && !block.IsDestroyed())
-                    hitBlock.Fill = new SolidColorBrush(Colors.DodgerBlue);
+                    hitBlock.Fill = DamagedStrongBlockColor;
             }
         }
     }

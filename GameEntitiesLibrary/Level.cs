@@ -1,4 +1,4 @@
-﻿namespace LevelLibrary;
+﻿namespace GameEntitiesLibrary;
 
 public enum BlockType
 {
@@ -22,7 +22,7 @@ public class Block
     }
 
     private int Health { get; set; }
-    private int MaxHealth { get; set; }
+    private int MaxHealth { get; }
 
     public BlockType Type { get; set; }
 

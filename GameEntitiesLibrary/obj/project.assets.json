@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\LevelLibrary\\LevelLibrary.csproj",
-      "projectName": "LevelLibrary",
-      "projectPath": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\LevelLibrary\\LevelLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\GameEntitiesLibrary\\GameEntitiesLibrary.csproj",
+      "projectName": "GameEntitiesLibrary",
+      "projectPath": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\GameEntitiesLibrary\\GameEntitiesLibrary.csproj",
       "packagesPath": "C:\\Users\\Kirill\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\LevelLibrary\\obj\\",
+      "outputPath": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\GameEntitiesLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -3,84 +3,84 @@
     "BlockConfigurations": [
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 30,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 90,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 150,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 210,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 270,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 330,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 390,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 450,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 510,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 570,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 630,
         "PositionY": 30
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 690,
         "PositionY": 30
@@ -171,168 +171,168 @@
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 30,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 90,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 150,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 210,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 270,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 330,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 390,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 450,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 510,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 570,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 630,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 2
         },
         "PositionX": 690,
         "PositionY": 110
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 30,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 90,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 150,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 210,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 270,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 330,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 390,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 450,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 510,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 570,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 630,
         "PositionY": 150
       },
       {
         "Block": {
-          "Type": 1
+          "Type": 0
         },
         "PositionX": 690,
         "PositionY": 150

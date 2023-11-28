@@ -1,13 +1,13 @@
 ﻿using System.Windows.Shapes;
 
-namespace LevelLibrary;
+namespace GameEntitiesLibrary;
 
 public class LevelSingleton
 {
     private static LevelSingleton _instance;
     public Dictionary<Rectangle, Block> BlockDictionary = new();
-    public Level CurrentLevel;
-    public List<Level>? Levels = new();
+    public Level? CurrentLevel;
+    public List<Level>? Levels;
 
     private LevelSingleton()
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using LevelLibrary;
+using GameEntitiesLibrary;
 using Newtonsoft.Json;
 
 namespace Arkanoid;
