@@ -236,9 +236,11 @@ public partial class GameWindow
                 if (block.Type == BlockType.Strong && !block.IsDestroyed())
                     hitBlock.Fill = DamagedStrongBlockColor;
             }
-
+            
+            
             if (!Canvas.Children.OfType<Rectangle>().Any(rect => rect.Tag is int))
             {
+                BallPositionY = DefaultBallPositionY;
                 var res = MessageBox.Show("Начать заново?", "Вы молодец!!", MessageBoxButton.YesNo);
                 if (res == MessageBoxResult.Yes)
                     LoadLevel();

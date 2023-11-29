@@ -21,6 +21,8 @@ public partial class LevelSelectorWindow : Window
 
         LoadLevels();
         LoadButtons();
+        
+        //this.Closing += ( sender, args ) => {new StartWindow(_serviceProvider).Show();};
     }
 
     private void LoadLevels()
@@ -65,4 +67,5 @@ public partial class LevelSelectorWindow : Window
         gameWindow.Show();
         Close();
     }
+    
 }
