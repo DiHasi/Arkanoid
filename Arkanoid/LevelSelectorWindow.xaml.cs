@@ -11,8 +11,8 @@ namespace Arkanoid;
 
 public partial class LevelSelectorWindow : Window
 {
-    private readonly List<Button> buttons = new();
     private readonly IServiceProvider _serviceProvider;
+    private readonly List<Button> buttons = new();
 
     public LevelSelectorWindow(IServiceProvider serviceProvider)
     {
@@ -32,8 +32,13 @@ public partial class LevelSelectorWindow : Window
 
     private void ActivateButtons()
     {
+        var currentUser = _serviceProvider.GetRequiredService<LevelState>().CurrentUser;
         var levels = _serviceProvider.GetRequiredService<List<Level>>();
-        for (var i = 0; i < levels.Count; i++)
+
+        if (currentUser == null) return;
+        var maxLevel = levels.Count;
+        var currentLevel = currentUser.LevelNumber;
+        for (var i = 0; i <= currentLevel; i++)
             buttons[i].IsEnabled = true;
     }
 
@@ -51,15 +56,13 @@ public partial class LevelSelectorWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        var levelSingleton = _serviceProvider.GetRequiredService<LevelSingleton>();
+        var levelSingleton = _serviceProvider.GetRequiredService<LevelState>();
         var levels = _serviceProvider.GetRequiredService<List<Level>>();
         var clickedButton = (Button)sender;
         levelSingleton.CurrentLevel = levels[buttons.IndexOf(clickedButton)]!;
 
         var gameWindow = new GameWindow(_serviceProvider);
         gameWindow.Show();
-
-        var levelSelectorWindow = GetWindow(clickedButton);
-        levelSelectorWindow!.Hide();
+        Close();
     }
 }

@@ -2,12 +2,9 @@
 
 namespace GameEntitiesLibrary;
 
-public class LevelSingleton 
+public class LevelState
 {
     public Dictionary<Rectangle, Block> BlockDictionary = new();
     public Level? CurrentLevel;
-
-    public LevelSingleton()
-    {
-    }
+    public User CurrentUser;
 }

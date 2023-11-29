@@ -5,6 +5,623 @@
         "Block": {
           "Type": 0
         },
+        "PositionX": 90,
+        "PositionY": 150
+      }
+    ],
+    "AdditionalParameters": {
+      "MagnetBonus": 0.5,
+      "PlatformEnlargementBonus": 0.0,
+      "BallAccelerationBonus": 0.5
+    }
+  },
+  {
+    "BlockConfigurations": [
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 90,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 150,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 210,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 270,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 330,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 390,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 450,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 510,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 570,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 630,
+        "PositionY": 150
+      }
+    ],
+    "AdditionalParameters": {
+      "MagnetBonus": 0.5,
+      "PlatformEnlargementBonus": 0.0,
+      "BallAccelerationBonus": 0.5
+    }
+  },
+  {
+    "BlockConfigurations": [
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 210,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 270,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 330,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 390,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 450,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 510,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 150,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 210,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 270,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 330,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 390,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 450,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 510,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 570,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 90,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 150,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 210,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 270,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 330,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 390,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 450,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 510,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 570,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 630,
+        "PositionY": 150
+      }
+    ],
+    "AdditionalParameters": {
+      "MagnetBonus": 0.5,
+      "PlatformEnlargementBonus": 0.0,
+      "BallAccelerationBonus": 0.5
+    }
+  },
+  {
+    "BlockConfigurations": [
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 30,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 90,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 150,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 210,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 270,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 330,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 390,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 450,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 510,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 570,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 630,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 690,
+        "PositionY": 30
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 30,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 90,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 150,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 210,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 270,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 330,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 390,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 450,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 510,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 570,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 630,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 1
+        },
+        "PositionX": 690,
+        "PositionY": 70
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 30,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 90,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 150,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 210,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 270,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 330,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 390,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 450,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 510,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 570,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 630,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 2
+        },
+        "PositionX": 690,
+        "PositionY": 110
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 30,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 90,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 150,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 210,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 270,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 330,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 390,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 450,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 510,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 570,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 630,
+        "PositionY": 150
+      },
+      {
+        "Block": {
+          "Type": 0
+        },
+        "PositionX": 690,
+        "PositionY": 150
+      }
+    ],
+    "AdditionalParameters": {
+      "MagnetBonus": 0.5,
+      "PlatformEnlargementBonus": 0.0,
+      "BallAccelerationBonus": 0.5
+    }
+  },
+  {
+    "BlockConfigurations": [
+      {
+        "Block": {
+          "Type": 0
+        },
         "PositionX": 30,
         "PositionY": 30
       },

@@ -70,6 +70,7 @@ public class Level
         BlockConfigurations = blockConfiguration;
         AdditionalParameters = additionalParameters;
     }
+    
 
     public List<BlockConfiguration> BlockConfigurations { get; set; }
     public AdditionalParameters AdditionalParameters { get; set; }
