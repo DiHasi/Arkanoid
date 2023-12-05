@@ -8,7 +8,7 @@ public class User
     }
 
     public string Name { get; }
-    public int Record { get; private set; }
+    public int Record { get; set; }
     public int LevelNumber { get; set; } = 0;
 
     public Dictionary<int, int> LevelScores { get; set; } = new();

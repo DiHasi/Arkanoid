@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DzrHQDFh24z60eQFPdy8fksrZ8eiCAYHj99jX8ebEgzXsXFj2U7PgUwOnKn1zy5EYP6LAqnMKAcd+JNJ4AHXJQ==",
+  "dgSpecHash": "7d9PAT3y5vni/1Nb9kReziDCOINfC+5XKGQ+4GR9AyTkayqsLj/UlkxStGrzjfsJh6L3wQjrsQr6g67a6CUVaA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\GameEntitiesLibrary\\GameEntitiesLibrary.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Kirill\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

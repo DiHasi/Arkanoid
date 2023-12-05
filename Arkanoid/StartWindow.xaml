@@ -79,18 +79,25 @@
         </Style>
         <Style TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <EventSetter Event="MouseLeftButtonUp" Handler="ListViewItem_MouseLeftButtonUp" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListViewItem">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="5">
+                        <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1" CornerRadius="5" Margin="5">
                             <StackPanel Margin="5">
                                 <TextBlock Text="{Binding PlayerName}" FontWeight="Bold" FontSize="14" />
                                 <TextBlock Text="{Binding RecordValue}" FontSize="13" />
                             </StackPanel>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="LightBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            
         </Style>
     </Window.Resources>
 </Window>

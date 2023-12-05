@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arkanoid", "Arkanoid\Arkano
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEntitiesLibrary", "GameEntitiesLibrary\GameEntitiesLibrary.csproj", "{34E6CE8B-2EA9-4BCA-B9E7-CF46133487DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{33AC53D7-5198-4DE4-ACF6-7D74C012B415}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{34E6CE8B-2EA9-4BCA-B9E7-CF46133487DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E6CE8B-2EA9-4BCA-B9E7-CF46133487DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E6CE8B-2EA9-4BCA-B9E7-CF46133487DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33AC53D7-5198-4DE4-ACF6-7D74C012B415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33AC53D7-5198-4DE4-ACF6-7D74C012B415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33AC53D7-5198-4DE4-ACF6-7D74C012B415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33AC53D7-5198-4DE4-ACF6-7D74C012B415}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

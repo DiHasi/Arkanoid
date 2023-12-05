@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using GameEntitiesLibrary;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -38,11 +39,21 @@ public partial class GameWindow
 
 
     private readonly IServiceProvider _serviceProvider;
+    private readonly JsonFacade _jsonFacade;
+    private readonly LevelState _levelState;
+    private readonly List<Level> _levels;
+    private readonly List<User> _users;
+    private readonly List<Record> _records;
 
     public GameWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
         _serviceProvider = serviceProvider;
+        _levelState = _serviceProvider.GetRequiredService<LevelState>();
+        _levels = _serviceProvider.GetRequiredService<List<Level>>();
+        _users = _serviceProvider.GetRequiredService<List<User>>();
+        _records = _serviceProvider.GetRequiredService<List<Record>>();
+        _jsonFacade = _serviceProvider.GetRequiredService<JsonFacade>();
         LoadLevel();
         CompositionTarget.Rendering += CompositionTarget_Rendering;
     }
@@ -54,6 +65,8 @@ public partial class GameWindow
     private double BallPositionY { get; set; }
     private double BallSpeedX { get; set; }
     private double BallSpeedY { get; set; }
+
+    private bool IsFinished { get; set; } = false;
 
     private void ConfigureElements()
     {
@@ -85,18 +98,17 @@ public partial class GameWindow
         foreach (var child in Canvas.Children.Cast<UIElement>().ToList())
             if (child is Rectangle { Tag : int })
                 Canvas.Children.Remove(child);
-
-        var levelState = _serviceProvider.GetRequiredService<LevelState>();
-        foreach (var blockConfig in levelState.CurrentLevel?.BlockConfigurations!)
+        
+        foreach (var blockConfig in _levelState.CurrentLevel?.BlockConfigurations!)
         {
-            levelState.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
+            _levelState.CurrentLevel.BlockConfigurations.ForEach(b => b.Block.RestoreHealth());
             var block = blockConfig.Block;
 
             var blockRectangle = new Rectangle
             {
                 Width = 50,
                 Height = 30,
-                Tag = levelState.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
+                Tag = _levelState.CurrentLevel.BlockConfigurations.IndexOf(blockConfig)
             };
 
             blockRectangle.Fill = block.Type switch
@@ -107,7 +119,7 @@ public partial class GameWindow
                 _ => blockRectangle.Fill
             };
 
-            levelState.BlockDictionary[blockRectangle] = blockConfig.Block;
+            _levelState.BlockDictionary[blockRectangle] = blockConfig.Block;
 
             Canvas.SetLeft(blockRectangle, blockConfig.PositionX);
             Canvas.SetTop(blockRectangle, blockConfig.PositionY);
@@ -144,22 +156,72 @@ public partial class GameWindow
     {
         BallPositionX += BallSpeedX * deltaTime * BallSpeed;
         BallPositionY += BallSpeedY * deltaTime * BallSpeed;
+        
+        // Проверка границ
+        if (BallPositionX < 10) // Левая граница
+        {
+            BallPositionX = 10;
+            BallSpeedX *= -1;
+        }
+        else if (BallPositionX + BallHeight > 774) // Правая граница
+        {
+            BallPositionX = 774 - BallHeight;
+            BallSpeedX *= -1;
+        }
 
+        if (BallPositionY < 10) // Верхняя граница
+        {
+            BallPositionY = 10;
+            BallSpeedY *= -1;
+        }
+
+
+        
         HitTestBounce();
 
         Canvas.SetLeft(Ball, BallPositionX);
         Canvas.SetTop(Ball, BallPositionY);
+
     }
+
+    private bool IsMessageBoxShown { get; set; }
 
     private void CompositionTarget_Rendering(object? sender, EventArgs e)
     {
         var currentTime = Stopwatch!.Elapsed.TotalSeconds;
         var deltaTime = currentTime - PreviousTime;
         PreviousTime = currentTime;
-
-        MovePlatform(deltaTime);
+        
+        ShowMessageBox();
+        if(!IsFinished)
+            MovePlatform(deltaTime);
         MoveBall(deltaTime);
     }
+    
+    private void ShowMessageBox(bool isLevelFinished = false)
+    {
+        if (IsFinished && !IsMessageBoxShown)
+        {
+            BallSpeedX = 0;
+            BallSpeedY = 0;
+            
+            IsMessageBoxShown = true;
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                var res = MessageBox.Show("Начать заново?", "Вы Молодец.", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                if (res == MessageBoxResult.Yes)
+                {
+                    IsMessageBoxShown = false;
+                    IsFinished = false;
+                    LoadLevel();
+                }
+                else
+                    FinishLevel(isLevelFinished);
+            }));
+             
+        }
+    }
+    
 
     private void HitTestBounce()
     {
@@ -201,11 +263,7 @@ public partial class GameWindow
                     BallSpeedY *= -1;
                     break;
                 case "BottomWall":
-                    var res = MessageBox.Show("Начать заново?", "Вы проиграли.", MessageBoxButton.YesNo);
-                    if (res == MessageBoxResult.Yes)
-                        LoadLevel();
-                    else
-                        FinishLevel();
+                    IsFinished = true;
                     break;
                 case "Platform":
                     CalculateAngle(rectangle, out var ballSpeedXNew, out var ballSpeedYNew);
@@ -217,13 +275,16 @@ public partial class GameWindow
     }
 
 
-    private void CheckCollisionWithBlocks(HitTestResult result)
+    private bool CheckCollisionWithBlocks(HitTestResult result)
     {
         if (result.VisualHit is Rectangle { Tag: int } hitBlock)
         {
             if (Canvas.GetTop(hitBlock) + 30 <= Canvas.GetTop(Ball) ||
                 Canvas.GetTop(hitBlock) >= Canvas.GetTop(Ball) + BallHeight)
+            {
                 BallSpeedY *= -1;
+                Console.WriteLine(Canvas.GetTop(hitBlock) + " " + Canvas.GetTop(Ball) + " " + BallSpeedY + " " + BallSpeedX);
+            }
             else
                 BallSpeedX *= -1;
 
@@ -240,99 +301,47 @@ public partial class GameWindow
             
             if (!Canvas.Children.OfType<Rectangle>().Any(rect => rect.Tag is int))
             {
-                BallPositionY = DefaultBallPositionY;
-                var res = MessageBox.Show("Начать заново?", "Вы молодец!!", MessageBoxButton.YesNo);
-                if (res == MessageBoxResult.Yes)
-                    LoadLevel();
-                else
-                    FinishLevel(true);
+                IsFinished = true;
+                ShowMessageBox(true);
             }
+            
+            return true;
         }
+
+        return false;
     }
 
     private HitTestResultBehavior HitTestCallback(HitTestResult result)
     {
         CheckCollisionWithWall(result);
-        CheckCollisionWithBlocks(result);
+        if (CheckCollisionWithBlocks(result))
+        {
+            return HitTestResultBehavior.Stop;
+        }
 
         return HitTestResultBehavior.Continue;
     }
 
     private void FinishLevel(bool isCompleted = false)
     {
-        var levelState = _serviceProvider.GetRequiredService<LevelState>();
-        var levels = _serviceProvider.GetRequiredService<List<Level>>();
-
-
         if (isCompleted)
         {
-            if (levels.IndexOf(levelState.CurrentLevel!)  == levelState.CurrentUser!.LevelNumber)
+            if (_levels.IndexOf(_levelState.CurrentLevel!)  == _levelState.CurrentUser!.LevelNumber)
             {
-                levelState.CurrentUser.IncreaseLevel();
-                UpdateUsers();
+                _levelState.CurrentUser.IncreaseLevel();
+                _jsonFacade.UpdateUsers("users.json", _users);
             }
 
-            levelState.CurrentUser.LevelScores[levels.IndexOf(levelState.CurrentLevel!)] =
-                levelState.CurrentUser.LevelScores.TryGetValue(levels.IndexOf(levelState.CurrentLevel), out var score)
+            _levelState.CurrentUser.LevelScores[_levels.IndexOf(_levelState.CurrentLevel!)] =
+                _levelState.CurrentUser.LevelScores.TryGetValue(_levels.IndexOf(_levelState.CurrentLevel!), out var score)
                     ? Math.Max(score, 100)
                     : 100;
-            levelState.CurrentUser.CalculateRecord();
-            UpdateRecords();
+            _levelState.CurrentUser.CalculateRecord();
+            _jsonFacade.UpdateRecords("records.json", _records, _levelState.CurrentUser);
         }
 
-        UpdateUsers();
+        _jsonFacade.UpdateUsers("users.json", _users);
         new LevelSelectorWindow(_serviceProvider).Show();
         Close();
-    }
-
-    private void UpdateUsers()
-    {
-        var users = _serviceProvider.GetRequiredService<List<User>>();
-        var fileName = "users.json";
-        var serializedUsers = JsonConvert.SerializeObject(users);
-        File.WriteAllText(fileName, serializedUsers);
-    }
-
-    private void UpdateRecords()
-    {
-        var levelState = _serviceProvider.GetRequiredService<LevelState>();
-        var fileName = "records.json";
-        List<Record> records;
-
-        try
-        {
-            var json = File.ReadAllText(fileName);
-            records = JsonConvert.DeserializeObject<List<Record>>(json) ?? new List<Record>();
-        }
-        catch (Exception)
-        {
-            records = new List<Record>();
-        }
-
-        var userRecord = records.FirstOrDefault(r => r.PlayerName == levelState.CurrentUser?.Name);
-        if (userRecord == null)
-        {
-            userRecord = new Record
-                { PlayerName = levelState.CurrentUser?.Name!, RecordValue = levelState.CurrentUser?.Record };
-            records.Add(userRecord);
-        }
-        else
-        {
-            userRecord.RecordValue = levelState.CurrentUser?.Record!;
-        }
-
-        records = records.OrderByDescending(r => r.RecordValue).ToList();
-
-        var serializedRecords = JsonConvert.SerializeObject(records);
-        File.WriteAllText(fileName, serializedRecords);
-    }
-
-    private void UpdateUser()
-    {
-        var levelState = _serviceProvider.GetRequiredService<LevelState>();
-        var levels = _serviceProvider.GetRequiredService<List<Level>>();
-        var users = _serviceProvider.GetRequiredService<List<User>>();
-        
-        var serializedUsers = JsonConvert.SerializeObject(users);
     }
 }

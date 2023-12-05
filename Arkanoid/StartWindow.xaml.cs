@@ -1,42 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using GameEntitiesLibrary;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 namespace Arkanoid;
 
-public partial class StartWindow : Window
+public partial class StartWindow
 {
+    private readonly JsonFacade _jsonFacade;
+    private readonly List<Record> _records;
     private readonly IServiceProvider _serviceProvider;
 
     public StartWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
         _serviceProvider = serviceProvider;
-        UpdateRecords();
+        _jsonFacade = _serviceProvider.GetRequiredService<JsonFacade>();
+        _records = _serviceProvider.GetRequiredService<List<Record>>();
+        LoadRecords();
     }
 
-    private void UpdateRecords()
+    private void LoadRecords()
     {
-        var fileName = "records.json";
-        List<Record> records;
-
-        if (File.Exists(fileName))
+        if (_records.Count <= 0) return;
         {
-            var json = File.ReadAllText(fileName);
-            records = JsonConvert.DeserializeObject<List<Record>>(json) ?? new List<Record>();
-
-            if (records.Count > 0)
-            {
-                foreach (var record in records)
-                {
-                    RecordsListViwe.Items.Add(record);
-                }
-            }
+            foreach (var record in _records)
+                RecordsListViwe.Items.Add(record);
         }
     }
 
@@ -62,5 +55,13 @@ public partial class StartWindow : Window
 
         new LevelSelectorWindow(_serviceProvider).Show();
         Close();
+    }
+    
+    private void ListViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is ListViewItem item && item.DataContext is Record record)
+        {
+            PlayerName.Text = record.PlayerName;
+        }
     }
 }

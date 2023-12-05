@@ -12,36 +12,28 @@ namespace Arkanoid;
 public partial class LevelSelectorWindow : Window
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly List<Button> buttons = new();
+    private readonly List<Level> _levels;
+    private readonly LevelState _levelState;
+    private readonly List<Button> _buttons = new();
 
     public LevelSelectorWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
         _serviceProvider = serviceProvider;
-
-        LoadLevels();
-        LoadButtons();
+        _levels = _serviceProvider.GetRequiredService<List<Level>>();
+        _levelState = _serviceProvider.GetRequiredService<LevelState>();
         
-        //this.Closing += ( sender, args ) => {new StartWindow(_serviceProvider).Show();};
+        LoadButtons();
     }
-
-    private void LoadLevels()
-    {
-        var json = File.ReadAllText("levels.json");
-        var levels = _serviceProvider.GetRequiredService<List<Level>>();
-        levels.AddRange(JsonConvert.DeserializeObject<List<Level>>(json)!);
-    }
-
+    
     private void ActivateButtons()
     {
-        var currentUser = _serviceProvider.GetRequiredService<LevelState>().CurrentUser;
-        var levels = _serviceProvider.GetRequiredService<List<Level>>();
+        var currentUser = _levelState.CurrentUser;
 
-        if (currentUser == null) return;
-        var maxLevel = levels.Count;
+        //var maxLevel = _levels.Count;
         var currentLevel = currentUser.LevelNumber;
         for (var i = 0; i <= currentLevel; i++)
-            buttons[i].IsEnabled = true;
+            _buttons[i].IsEnabled = true;
     }
 
     private void LoadButtons()
@@ -50,7 +42,7 @@ public partial class LevelSelectorWindow : Window
             if (element is Button button)
             {
                 button.Click += Button_Click;
-                buttons.Add(button);
+                _buttons.Add(button);
             }
 
         ActivateButtons();
@@ -58,14 +50,22 @@ public partial class LevelSelectorWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        var levelSingleton = _serviceProvider.GetRequiredService<LevelState>();
-        var levels = _serviceProvider.GetRequiredService<List<Level>>();
         var clickedButton = (Button)sender;
-        levelSingleton.CurrentLevel = levels[buttons.IndexOf(clickedButton)]!;
+        _levelState.CurrentLevel = _levels[_buttons.IndexOf(clickedButton)]!;
 
         var gameWindow = new GameWindow(_serviceProvider);
         gameWindow.Show();
         Close();
     }
-    
+
+    private void BackButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        new StartWindow(_serviceProvider).Show();
+        Close();
+    }
+
+    private void QuitButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
 }
