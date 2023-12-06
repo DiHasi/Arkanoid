@@ -4,7 +4,7 @@ using Record = GameEntitiesLibrary.Record;
 
 namespace Tests;
 
-public class TestsFacadeUpdateRecords
+public class FacadeUpdateRecordsTests
 {
     [Fact]
     public void UpdateRecords_NewUser_AddsUserRecordToFile()
@@ -12,7 +12,7 @@ public class TestsFacadeUpdateRecords
         var facade = new JsonFacade();
         var fileName = "records1.json";
         var currentUser = new User("Alice") { Record = 100 };
-        var records = new List<Record>(); // Пустой список
+        var records = new List<Record>(); 
 
         facade.UpdateRecords(fileName, records, currentUser);
 

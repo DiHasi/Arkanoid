@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tests;
 
-public class TestsFacadeUpdateUsers
+public class FacadeUpdateUsersTests
 {
     [Fact]
     public void UpdateUsers_CreatesFileAndWritesUsers()
@@ -21,7 +21,7 @@ public class TestsFacadeUpdateUsers
 
         File.Delete(fileName);
 
-        Assert.Equal(users.Count, result.Count);
+        Assert.Equal(users.Count, result!.Count);
         Assert.Equal(users[0].Name, result[0].Name);
         Assert.Equal(users[1].Name, result[1].Name);
     }

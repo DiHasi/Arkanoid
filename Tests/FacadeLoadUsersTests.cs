@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tests;
 
-public class TestsFacadeLoadUsers
+public class FacadeLoadUsersTests
 {
     [Fact]
     public void LoadUsers_ShouldReturnEmptyList_WhenFileDoesNotExist()

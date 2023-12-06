@@ -4,7 +4,7 @@ using Record = GameEntitiesLibrary.Record;
 
 namespace Tests;
 
-public class TestsFacadeLoadRecords
+public class FacadeLoadRecordsTests
 {
     [Fact]
     public void LoadRecords_FileDoesNotExist_ReturnsEmptyList()

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 using GameEntitiesLibrary;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 
 namespace Arkanoid;
 
@@ -56,6 +53,11 @@ public partial class GameWindow
         _jsonFacade = _serviceProvider.GetRequiredService<JsonFacade>();
         LoadLevel();
         CompositionTarget.Rendering += CompositionTarget_Rendering;
+    }
+
+    public GameWindow()
+    {
+        
     }
 
     private double PlatformPositionX { get; set; }
@@ -235,7 +237,7 @@ public partial class GameWindow
         VisualTreeHelper.HitTest(Canvas, null, hitTestCallback, hitTestParams);
     }
 
-    private void CalculateAngle(Rectangle platform, out double ballSpeedXNew, out double ballSpeedYNew)
+    /*public void CalculateAngle(Rectangle platform, out double ballSpeedXNew, out double ballSpeedYNew)
     {
         var platformCenterX = Canvas.GetLeft(platform) + platform.Width / 2;
         var distance = Math.Abs(BallPositionX + BallHeight / 2 - platformCenterX);
@@ -248,8 +250,23 @@ public partial class GameWindow
         var ballSpeedMagnitude = Math.Sqrt(BallSpeedX * BallSpeedX + BallSpeedY * BallSpeedY);
         ballSpeedXNew = ballSpeedMagnitude * Math.Sin(angle);
         ballSpeedYNew = -ballSpeedMagnitude * Math.Cos(angle);
-    }
+    }*/
 
+    public void CalculateAngle(Rectangle platform, double BallPositionX, double BallHeight, double BallSpeedX, double BallSpeedY, out double ballSpeedXNew, out double ballSpeedYNew)
+{
+    var platformCenterX = Canvas.GetLeft(platform) + platform.Width / 2;
+    var distance = Math.Abs(BallPositionX + BallHeight / 2 - platformCenterX);
+    var maxDistance = platform.Width / 2;
+    var angle = Math.PI / 2 * (distance / maxDistance);
+    var maxAngle = Math.PI / 4;
+    angle = Math.Max(-maxAngle, Math.Min(maxAngle, angle));
+    if (BallPositionX + BallHeight / 2 < platformCenterX) angle = -angle;
+
+    var ballSpeedMagnitude = Math.Sqrt(BallSpeedX * BallSpeedX + BallSpeedY * BallSpeedY);
+    ballSpeedXNew = ballSpeedMagnitude * Math.Sin(angle);
+    ballSpeedYNew = -ballSpeedMagnitude * Math.Cos(angle);
+}
+    
     private void CheckCollisionWithWall(HitTestResult result)
     {
         if (result.VisualHit is Rectangle { Tag: "base" } rectangle)
@@ -266,7 +283,7 @@ public partial class GameWindow
                     IsFinished = true;
                     break;
                 case "Platform":
-                    CalculateAngle(rectangle, out var ballSpeedXNew, out var ballSpeedYNew);
+                    CalculateAngle(rectangle, BallPositionX, BallHeight, BallSpeedX, BallSpeedY, out var ballSpeedXNew, out var ballSpeedYNew);
                     BallSpeedX = ballSpeedXNew;
                     BallSpeedY = ballSpeedYNew;
                     Console.WriteLine(ballSpeedXNew + " " + ballSpeedYNew);

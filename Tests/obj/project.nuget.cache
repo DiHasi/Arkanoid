@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "72bCgDdmKih+ZIYYGOb/0oxTYc4iC+BJ7J3ITeTfZ++RNoxkym476c1vi9zs7mvrl/StNFFtkQPEOLsPtngzwA==",
+  "dgSpecHash": "xkDUCJm77wTy3VifrmDjhmjO4tMrJChN9UVCd4vCdVxQQXccjvV3utaYF2YGX7hVZ1SGM/reybwaEFt3YW8OHg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Kirill\\RiderProjects\\Arkanoid\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kirill\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\Kirill\\.nuget\\packages\\microsoft.codecoverage\\17.5.0\\microsoft.codecoverage.17.5.0.nupkg.sha512",
+    "C:\\Users\\Kirill\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\Kirill\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\Kirill\\.nuget\\packages\\microsoft.net.test.sdk\\17.5.0\\microsoft.net.test.sdk.17.5.0.nupkg.sha512",
     "C:\\Users\\Kirill\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\Kirill\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
@@ -92,7 +94,8 @@
     "C:\\Users\\Kirill\\.nuget\\packages\\xunit.core\\2.4.2\\xunit.core.2.4.2.nupkg.sha512",
     "C:\\Users\\Kirill\\.nuget\\packages\\xunit.extensibility.core\\2.4.2\\xunit.extensibility.core.2.4.2.nupkg.sha512",
     "C:\\Users\\Kirill\\.nuget\\packages\\xunit.extensibility.execution\\2.4.2\\xunit.extensibility.execution.2.4.2.nupkg.sha512",
-    "C:\\Users\\Kirill\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512"
+    "C:\\Users\\Kirill\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512",
+    "C:\\Users\\Kirill\\.nuget\\packages\\xunit.stafact\\1.2.46-alpha\\xunit.stafact.1.2.46-alpha.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <TargetFramework>net7.0-windows</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,9 +20,11 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="Xunit.StaFact" Version="1.2.46-alpha" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Arkanoid\Arkanoid.csproj" />
       <ProjectReference Include="..\GameEntitiesLibrary\GameEntitiesLibrary.csproj" />
     </ItemGroup>
 

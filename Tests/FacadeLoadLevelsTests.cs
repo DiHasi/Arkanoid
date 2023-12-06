@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tests;
 
-public class TestsFacadeLoadLevels
+public class FacadeLoadLevelsTests
 {
     [Fact]
     public void LoadLevels_FileDoesNotExist_ReturnsEmptyList()
