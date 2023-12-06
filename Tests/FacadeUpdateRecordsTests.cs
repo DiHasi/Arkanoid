@@ -7,7 +7,7 @@ namespace Tests;
 public class FacadeUpdateRecordsTests
 {
     [Fact]
-    public void UpdateRecords_NewUser_AddsUserRecordToFile()
+    public void UpdateRecords_WhenNewUser_AddsUserRecordToFile()
     {
         var facade = new JsonFacade();
         var fileName = "records1.json";
@@ -27,7 +27,7 @@ public class FacadeUpdateRecordsTests
     }
 
     [Fact]
-    public void UpdateRecords_ExistingUser_UpdatesUserRecordAndOrderRecords()
+    public void UpdateRecords_WhenExistingUser_UpdatesUserRecordAndOrderRecords()
     {
         var facade = new JsonFacade();
         var fileName = "records2.json";

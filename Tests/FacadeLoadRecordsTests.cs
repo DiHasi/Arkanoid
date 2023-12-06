@@ -7,7 +7,7 @@ namespace Tests;
 public class FacadeLoadRecordsTests
 {
     [Fact]
-    public void LoadRecords_FileDoesNotExist_ReturnsEmptyList()
+    public void LoadRecords_WhenFileDoesNotExist_ReturnsEmptyList()
     {
         var facade = new JsonFacade();
         var result = facade.LoadRecords("nonexistentfile.json");
@@ -15,7 +15,7 @@ public class FacadeLoadRecordsTests
     }
 
     [Fact]
-    public void LoadRecords_FileExistsButEmpty_ReturnsEmptyList()
+    public void LoadRecords_WhenFileExistsButEmpty_ReturnsEmptyList()
     {
         var facade = new JsonFacade();
         File.WriteAllText("emptyfile1.json", "");
@@ -25,7 +25,7 @@ public class FacadeLoadRecordsTests
     }
 
     [Fact]
-    public void LoadRecords_FileExistsAndValid_ReturnsRecordList()
+    public void LoadRecords_WhenFileExistsAndValid_ReturnsRecordList()
     {
         var facade = new JsonFacade();
         var records = new List<Record> { new Record() };

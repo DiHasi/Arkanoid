@@ -6,7 +6,7 @@ namespace Tests;
 public class FacadeLoadLevelsTests
 {
     [Fact]
-    public void LoadLevels_FileDoesNotExist_ReturnsEmptyList()
+    public void LoadLevels_WhenFileDoesNotExist_ReturnsEmptyList()
     {
         var facade = new JsonFacade();
         var result = facade.LoadLevels("nonexistentfile.json");
@@ -14,7 +14,7 @@ public class FacadeLoadLevelsTests
     }
 
     [Fact]
-    public void LoadLevels_FileExistsButEmpty_ReturnsEmptyList()
+    public void LoadLevels_WhenFileExistsButEmpty_ReturnsEmptyList()
     {
         var facade = new JsonFacade();
         File.WriteAllText("emptyfile.json", "");
@@ -24,7 +24,7 @@ public class FacadeLoadLevelsTests
     }
 
     [Fact]
-    public void LoadLevels_FileExistsAndValid_ReturnsLevelList()
+    public void LoadLevels_WhenFileExistsAndValid_ReturnsLevelList()
     {
         var facade = new JsonFacade();
         var blockConfigurations = new List<BlockConfiguration> 

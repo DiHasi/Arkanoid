@@ -26,7 +26,15 @@
                 </Border>
 
                 <Button Grid.Row="2" Content="Начать" HorizontalAlignment="Stretch" Margin="5" Click="Button_Click" />
-                <ListView Name="RecordsListViwe" Grid.Row="3" Margin="5" Background="Linen" />
+                <ListView Name="RecordsListView" Grid.Row="3" Margin="5" Background="Linen">
+                    <ListView.Template>
+                        <ControlTemplate TargetType="ListView">
+                            <ScrollViewer CanContentScroll="False" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListView.Template>
+                </ListView>
             </Grid>
         </Border>
     </Border>
@@ -99,5 +107,6 @@
             </Setter>
             
         </Style>
+        
     </Window.Resources>
 </Window>

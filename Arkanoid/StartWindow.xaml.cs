@@ -29,7 +29,7 @@ public partial class StartWindow
         if (_records.Count <= 0) return;
         {
             foreach (var record in _records)
-                RecordsListViwe.Items.Add(record);
+                RecordsListView.Items.Add(record);
         }
     }
 

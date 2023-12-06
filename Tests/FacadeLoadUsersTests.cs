@@ -6,7 +6,7 @@ namespace Tests;
 public class FacadeLoadUsersTests
 {
     [Fact]
-    public void LoadUsers_ShouldReturnEmptyList_WhenFileDoesNotExist()
+    public void LoadUsers_WhenFileDoesNotExist_ReturnsEmptyList()
     {
         var jsonFacade = new JsonFacade();
         var fileName = "nonexistent-file.json";
@@ -17,7 +17,7 @@ public class FacadeLoadUsersTests
     }
 
     [Fact]
-    public void LoadUsers_ShouldReturnDeserializedList_WhenFileExists()
+    public void LoadUsers_WhenFileExists_ReturnsDeserializedList()
     {
         var jsonFacade = new JsonFacade();
         var fileName = "existing-file.json";
@@ -35,7 +35,7 @@ public class FacadeLoadUsersTests
     }
 
     [Fact]
-    public void LoadUsers_ShouldReturnEmptyList_WhenFileIsEmpty()
+    public void LoadUsers_WhenFileIsEmpty_ReturnsEmptyList()
     {
         var jsonFacade = new JsonFacade();
         var fileName = "empty-file.json";

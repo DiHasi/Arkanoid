@@ -6,7 +6,7 @@ namespace Tests;
 public class FacadeUpdateUsersTests
 {
     [Fact]
-    public void UpdateUsers_CreatesFileAndWritesUsers()
+    public void UpdateUsers_WhenFileDoesNotExist_CreatesFileAndWritesUsers()
     {
         var facade = new JsonFacade();
         var users = new List<User> { new User("Alice") , new User("Bob") };
@@ -27,7 +27,7 @@ public class FacadeUpdateUsersTests
     }
 
     [Fact]
-    public void UpdateUsers_OverwritesExistingUsers()
+    public void UpdateUsers_WhenFileExists_OverwritesExistingUsers()
     {
         var facade = new JsonFacade();
         var initialUsers = new List<User> { new User("Alice")  };
